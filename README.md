@@ -1,21 +1,26 @@
 # 🇳🇴 NorEval
 
-The up-to-date NorEval config files for [EleutherAI/lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness). The main branch is the official source for **NorEval version 1.1**, supporting all 35 tasks used in our [Norwegian LLM dashboard](https://ltgoslo.github.io/llm-dashboard).
+NorEval is a multi-task Norwegian language understanding and generation evaluation benchmark. 
 
-_____
-
-### Updates
-* **`23.09.2026`**: 📊 Our interactive dashboard is available [here](https://ltgoslo.github.io/llm-dashboard/noreval/).
+### 🔥 Updates
+* **`15.10.2026`**: 📊 Our interactive dashboard is available [here](https://ltgoslo.github.io/llm-dashboard/noreval/).
 * **`16.05.2025`**: 🎉 Our paper is accepted to [ACL 2025 Findings](https://2025.aclweb.org/program/find_papers/).
 * **`07.05.2025`**: 🫰 NorEval is now integrated into [LM Evaluation Harness](https://github.com/EleutherAI/lm-evaluation-harness/tree/main/lm_eval/tasks/noreval).
 * **`10.04.2025`**: 📕 Our pre-print is available on [arXiv](https://arxiv.org/abs/2504.07749).
 * **`09.04.2025`**: 🚀 We release NorEval, including our [annotation guidelines](./guidelines/) and novel datasets ([NorRewrite-Instruct](https://huggingface.co/datasets/ltg/norrewrite-instruct) & [NorSummarize-Instruct](https://huggingface.co/datasets/ltg/norsummarize-instruct)).
 
-_____
+### 📖 Contents
 
-**Paper title:** [NorEval: A Norwegian Language Understanding and Generation Evaluation Benchmark](https://aclanthology.org/2025.findings-acl.181/)
+- [Overview](#-overview)
+- [Dashboard](#-dashboard)
+- [Tasks](#️-tasks)
+- [How to use](#‍-how-to-use)
+- [Annotation guidelines and tools](#-annotation-guidelines-and-tools)
+- [Citation](#-citation)
 
-NorEval is a multi-task Norwegian language understanding and generation evaluation benchmark that combines existing peer-reviewed datasets with new datasets manually created from scratch. NorEval covers diverse task categories: sentiment analysis, Norwegian language knowledge, Norwegian-specific \& world knowledge, machine reading comprehension, commonsense reasoning, machine translation, text summarization, instruction following, and truthfulness. Our main evaluation principles are:
+### 😎 Overview
+
+NorEval is a multi-task Norwegian language understanding and generation evaluation benchmark that combines existing peer-reviewed datasets with new datasets manually created from scratch ([NCB](https://huggingface.co/datasets/hcfa/ncb), [NorRewrite-Instruct](https://huggingface.co/datasets/ltg/norrewrite-instruct), [NorSummarize-Instruct](https://huggingface.co/datasets/ltg/norsummarize-instruct) for Norwegian Bokmål, and [NorIdiom](https://huggingface.co/datasets/Sprakbanken/Norwegian_idioms) for Norwegian Bokmål and Nynorsk). NorEval covers diverse task categories: sentiment analysis, Norwegian language knowledge, Norwegian-specific \& world knowledge, machine reading comprehension, commonsense reasoning, machine translation, text summarization, instruction following, and truthfulness. Our main evaluation principles are:
 
 - 🌐 **Linguistic diversity**: support for both of the official written standards of Norwegian: Bokmål and Nynorsk (the minority variant).
 - 📊 **Task diversity**: coverage of various least addressed tasks for Norwegian. In particular, only three out of 24 NorEval datasets are included in existing Norwegian benchmarks to date: [NorBench](https://aclanthology.org/2023.nodalida-1.61/), [NLEBench](https://aclanthology.org/2024.emnlp-main.317/), [ScandEval](https://aclanthology.org/2023.nodalida-1.20/), and [SEB](https://proceedings.neurips.cc/paper_files/paper/2024/file/4746bb91bd073ec7eef930d5775122ba-Paper-Datasets_and_Benchmarks_Track.pdf).
@@ -23,17 +28,14 @@ NorEval is a multi-task Norwegian language understanding and generation evaluati
 - 📏 **Prompt sensitivity**: evaluation across multiple human-written prompts to account for the prompt sensitivity.
 - 👩🏻‍🔬 **Standardized evaluation**: integration of NorEval into LM Evaluation Harness for flexible and reproducible evaluation.
 
-_____
 
-### Dashboard
+### 📊 Dashboard
 
 Explore the results of benchmarking Norwegian and multilingual models on NorEval in our [interactive dashboard](https://ltgoslo.github.io/llm-dashboard/noreval/). The dashboard lets you compare models on individual tasks or category averages across 0-shot, 1-shot, and 5-shot regimes, choose how the scores are aggregated over prompts and normalized, and filter models by size or by whether they are fully open.
 
 [![NorEval dashboard](images/dashboard.png)](https://ltgoslo.github.io/llm-dashboard/noreval/)
 
-_____
-
-### Tasks
+### 🗃️ Tasks
 
 |Name  |Bokmål | Nynorsk  | Northern Sámi | Task formulation  | Task category |
 |:---|:---|:---|:---|:---|:---|
@@ -73,37 +75,7 @@ _____
 
 </details>
 
-_____
-
-### Changelog
-
-**NorEval v1.1 (main branch)**
-- New metadata: Every task now explicitly declares the primary metric, random-baseline performance, category and language(s). The order of metrics is changed to list the primary metric first.
-- New task: [SLIDE](https://huggingface.co/datasets/ltg/slide) is a language identification task with five choices: Bokmål, Nynorsk, Danish, Swedish, or other language. One sentence can be compatible with multiple languages, a prediction is considered correct if it matches any of them.
-- New task: [NoCoLA](https://huggingface.co/datasets/ltg/nocola), BLiMP-like Norwegian linguistic acceptability task.
-- New task: Northern Sámi [MultiBLiMP](https://huggingface.co/datasets/jumelet/multiblimp) is actually a group of tasks, we evaluate each linguistic feature separately to get more informative results (unlike the official `lm-eval` MultiBLiMP).
-- New task: NorOpenBookQA without facts is a simple rephrasing of the original NorOpenBookQA so that it evaluates knowledge rather then reading comprehension.
-- New task: Bokmål ↔ Nynorsk translation based on the [NorSumm dataset](https://huggingface.co/datasets/SamiaT/NorSumm), which contains multi-sentence manual translations.
-- New task: Bokmål ↔ Northern Sámi translation based on [ltg/saami-tatoeba](https://huggingface.co/datasets/ltg/saami-tatoeba).
-- NorBelebele is now based on the corrected Bokmål passages from FLORES+ -- [ltg/norbelebele](https://huggingface.co/datasets/ltg/norbelebele).
-- NorBelebele has two additional prompts, so that it's also evaluated in cloze formulation.
-- ASK-GEC is now scored inside the harness, not in an extra post-production step.
-- NorIdiom gets a new primary metric `em_first` and a less aggressive stopping criterion.
-- The references in NorSumm are cleaned -- we strip newlines from the reference summaries, which broke few-shot evaluation previously.
-- Hard-coded `num_fewshot: 0` are removed from `ncb`, `noridiom`, `norsumm`, `nortruthfulqa_gen`, `nortruthfulqa_mc` and `nrk_quiz_qa`.
-- `num_beams: 1` is removed from all generative tasks, which previously broke evaluation with vLLM.
-- `nortruthfulqa_gen`'s `doc_to_target` is changed from " " to `best_answer`, to work properly with few-shot evaluation.
-
-**NorEval v1.2 (work-in-progress in the [`v1.2` branch](https://github.com/klynga/noreval/tree/v1.2))**
-- New prompts: Every multiple-choice task is now evaluated in three formulations: cloze, multiple-choise & hybrid. Each multiple-choice dataset now has 5 prompt stems, each with 3 formulations (instead of 5 mixed prompts), giving 15 subtasks with tags `<task>_cf`, `<task>_hybrid`, `<task>_mcf`.
-- New metrics: All multiple-choice tasks are now evaluated with all possible loglikelihood normalizations (none, per-character and PMI), as well as with new soft probabilistic metrics.
-- New metrics: Standard errors are now computed consistently for every metric.
-- All generative tasks are now sampled, without any temperature adjustment, to better estimate the expected performance and measurement uncertainty. To reduce variance, we repeat the sampling multiple times.
-- The whole repository has been restructured so that all tasks are defined consistently. Directories now follow `<task>/<language>/<task>_<language>_p<N>.yaml` format throughout.
-- BERTScore is now pinned to `device="cpu"`.
-_____
-
-### How to use
+### 👨🏻‍💻 How to use
 
 The tasks are plain [LM Evaluation Harness](https://github.com/EleutherAI/lm-evaluation-harness) configs — no fork of the harness is needed. Install the harness, clone this repository, and point the harness to it with `--include_path`:
 
@@ -130,16 +102,14 @@ lm_eval \
 * The task names in the table above run all prompt variants of a dataset at once; append a prompt index to run a single variant (e.g. `norquad_p2`).
 * Tasks loaded via `--include_path` take precedence over any same-named NorEval tasks bundled with the harness, so this repository is the source of truth for the task definitions.
 
-_____
 
-### Annotation guidelines and tools
+### 🧰 Annotation guidelines and tools
 
 * [`guidelines/`](./guidelines/): the annotation guidelines for the human baselines, prompt writing, and the creation of NorRewrite-Instruct and NorSummarize-Instruct.
 * [`tools/`](./tools/): example task groups for aggregating results by category and a script for processing and plotting the results.
 
-_____
 
-### Citation
+### 📝 Citation
 
 ```bibtex
 @inproceedings{mikhailov-etal-2025-noreval,
